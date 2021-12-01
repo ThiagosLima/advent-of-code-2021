@@ -3,16 +3,11 @@ defmodule SonarSweep do
   Documentation for `SonarSweep`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> SonarSweep.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def increase(measures) do
+    measures
+    |> Enum.chunk_every(2, 1, :discard)
+    |> Enum.reduce(0, fn [first, second], total ->
+      if second > first, do: total + 1, else: total
+    end)
   end
 end

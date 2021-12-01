@@ -10,4 +10,13 @@ defmodule SonarSweep do
       if second > first, do: total + 1, else: total
     end)
   end
+
+  def start() do
+    {:ok, contents} = File.read("./lib/input.txt")
+
+    contents
+    |> String.split("\n")
+    |> Enum.map(&String.to_integer/1)
+    |> increase
+  end
 end

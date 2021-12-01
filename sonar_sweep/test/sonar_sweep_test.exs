@@ -13,4 +13,9 @@ defmodule SonarSweepTest do
   test "the are two increases" do
     assert SonarSweep.increase([0, 1, 2]) == 2
   end
+
+  test "sliding window" do
+    measures = [0, 1, 2, 3, 4]
+    assert SonarSweep.sliding_window(measures) == [3, 6, 9]
+  end
 end

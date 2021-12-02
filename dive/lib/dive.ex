@@ -26,4 +26,15 @@ defmodule Dive do
       %{direction: direction, quantity: String.to_integer(quantity)}
     end)
   end
+
+  def part_one() do
+    {:ok, contents} = File.read("./lib/input.txt")
+
+    position =
+      contents
+      |> parse
+      |> move
+
+    position.horizontal * position.depth
+  end
 end

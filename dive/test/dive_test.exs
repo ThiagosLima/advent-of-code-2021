@@ -3,7 +3,7 @@ defmodule DiveTest do
   doctest Dive
 
   test "don't move if there is no course" do
-    assert Dive.move([]) == %{horizontal: 0, depth: 0}
+    assert Dive.move([]) == %{horizontal: 0, depth: 0, aim: 0}
   end
 
   test "go to the right position" do
@@ -14,7 +14,7 @@ defmodule DiveTest do
              %{direction: "up", quantity: 3},
              %{direction: "down", quantity: 8},
              %{direction: "forward", quantity: 2}
-           ]) == %{horizontal: 15, depth: 10}
+           ]) == %{horizontal: 15, depth: 60, aim: 10}
   end
 
   test "parse the input" do

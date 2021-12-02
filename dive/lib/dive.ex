@@ -7,6 +7,9 @@ defmodule Dive do
     Enum.reduce(course, %{horizontal: 0, depth: 0, aim: 0}, fn coordinate, position ->
       case coordinate.direction do
         "forward" ->
+          # update_map = %{horizontal: coordinate.quantity, depth: position.aim * coordinate.quantity}
+          # Map.merge(position, update_map, fn _key, value, update -> value + update end)
+
           %{
             position
             | horizontal: position.horizontal + coordinate.quantity,

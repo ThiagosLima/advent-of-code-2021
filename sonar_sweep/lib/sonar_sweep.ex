@@ -6,15 +6,13 @@ defmodule SonarSweep do
   def increase(measures) do
     measures
     |> Stream.chunk_every(2, 1, :discard)
-    |> Enum.reduce(0, fn [first, second], total ->
-      if second > first, do: total + 1, else: total
-    end)
+    |> Enum.count(fn [first, second] -> second > first end)
   end
 
   def sliding_window(measures) do
     measures
     |> Stream.chunk_every(3, 1, :discard)
-    |> Enum.map(fn [first, second, third] -> first + second + third end)
+    |> Enum.map(&Enum.sum/1)
   end
 
   def start() do

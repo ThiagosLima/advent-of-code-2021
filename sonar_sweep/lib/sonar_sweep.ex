@@ -15,12 +15,17 @@ defmodule SonarSweep do
     |> Enum.map(&Enum.sum/1)
   end
 
+  defp parse(input) do
+    input
+    |> String.split("\n")
+    |> Stream.map(&String.to_integer/1)
+  end
+
   def start() do
     {:ok, contents} = File.read("./lib/input.txt")
 
     contents
-    |> String.split("\n")
-    |> Stream.map(&String.to_integer/1)
+    |> parse
     |> sliding_window
     |> increase
   end

@@ -3,16 +3,18 @@ defmodule Dive do
   Documentation for `Dive`.
   """
 
-  @doc """
-  Hello world.
+  def move(course) do
+    Enum.reduce(course, %{horizontal: 0, depth: 0}, fn coordinate, position ->
+      case coordinate.direction do
+        "forward" ->
+          Map.update!(position, :horizontal, &(&1 + coordinate.quantity))
 
-  ## Examples
+        "up" ->
+          Map.update!(position, :depth, &(&1 - coordinate.quantity))
 
-      iex> Dive.hello()
-      :world
-
-  """
-  def hello do
-    :world
+        _down ->
+          Map.update!(position, :depth, &(&1 + coordinate.quantity))
+      end
+    end)
   end
 end

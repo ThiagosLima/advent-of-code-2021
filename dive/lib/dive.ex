@@ -17,4 +17,13 @@ defmodule Dive do
       end
     end)
   end
+
+  def parse(input) do
+    input
+    |> String.split("\n")
+    |> Enum.map(&String.split(&1, " "))
+    |> Enum.map(fn [direction, quantity] ->
+      %{direction: direction, quantity: String.to_integer(quantity)}
+    end)
+  end
 end

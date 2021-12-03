@@ -3,16 +3,13 @@ defmodule BinaryDiagnostic do
   Documentation for `BinaryDiagnostic`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> BinaryDiagnostic.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def parse(input) do
+    input
+    |> String.split("\n")
+    |> Enum.map(fn binary ->
+      binary
+      |> String.codepoints()
+      |> Enum.map(&String.to_integer/1)
+    end)
   end
 end

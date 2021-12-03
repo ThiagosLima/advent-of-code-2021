@@ -34,4 +34,12 @@ defmodule BinaryDiagnostic do
     |> List.zip()
     |> Enum.map(&Tuple.to_list/1)
   end
+
+  def start() do
+    {:ok, contents} = File.read("./lib/input.txt")
+
+    contents
+    |> parse
+    |> power_consumption
+  end
 end

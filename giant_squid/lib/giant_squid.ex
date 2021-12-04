@@ -3,16 +3,7 @@ defmodule GiantSquid do
   Documentation for `GiantSquid`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> GiantSquid.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def winning_row(matrix) do
+    Enum.count(matrix, fn row -> Enum.filter(row, &(&1 != nil)) != [] end) != 5
   end
 end

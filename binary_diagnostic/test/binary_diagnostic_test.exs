@@ -18,7 +18,7 @@ defmodule BinaryDiagnosticTest do
       ["0", "1", "0", "1", "0"]
     ]
 
-    assert BinaryDiagnostic.co2_scrubber(report) == 10
+    assert BinaryDiagnostic.co2_scrubber(report) == ["0", "1", "0", "1", "0"]
   end
 
   test "oxygen generator rating" do
@@ -37,7 +37,7 @@ defmodule BinaryDiagnosticTest do
       ["0", "1", "0", "1", "0"]
     ]
 
-    assert BinaryDiagnostic.oxygen_generator(report) == 23
+    assert BinaryDiagnostic.oxygen_generator(report) == ["1", "0", "1", "1", "1"]
   end
 
   test "power_consumption" do

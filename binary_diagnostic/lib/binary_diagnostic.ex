@@ -4,51 +4,31 @@ defmodule BinaryDiagnostic do
   """
 
   def co2_scrubber(report) do
-    report
-    |> co2_scrubber(0)
-    |> list_to_number
+    co2_scrubber(report, 0)
   end
 
   defp co2_scrubber([rating], _), do: rating
 
   defp co2_scrubber(report, digit) do
-    least = get_least(report)
+    least = get_epsilon(report)
 
     report
-    |> Enum.filter(fn rating ->
-      Enum.at(rating, digit) == Enum.at(least, digit)
-    end)
+    |> Enum.filter(&(Enum.at(&1, digit) == Enum.at(least, digit)))
     |> co2_scrubber(digit + 1)
   end
 
   def oxygen_generator(report) do
-    report
-    |> oxygen_generator(0)
-    |> list_to_number
+    oxygen_generator(report, 0)
   end
 
   defp oxygen_generator([row], _), do: row
 
   defp oxygen_generator(report, digit) do
-    most = get_most(report)
+    most = get_gama(report)
 
     report
-    |> Enum.filter(fn row ->
-      Enum.at(row, digit) == Enum.at(most, digit)
-    end)
+    |> Enum.filter(&(Enum.at(&1, digit) == Enum.at(most, digit)))
     |> oxygen_generator(digit + 1)
-  end
-
-  defp get_most(report) do
-    report
-    |> transpose
-    |> Enum.map(&if ones(&1) >= zeros(&1), do: "1", else: "0")
-  end
-
-  defp get_least(report) do
-    report
-    |> transpose
-    |> Enum.map(&if zeros(&1) <= ones(&1), do: "0", else: "1")
   end
 
   defp zeros(row) do
@@ -60,22 +40,29 @@ defmodule BinaryDiagnostic do
   end
 
   def power_consumption(report) do
-    gama = get_gama(report)
-    epsilon = get_epsilon(report)
+    gama =
+      report
+      |> get_gama
+      |> list_to_number
+
+    epsilon =
+      report
+      |> get_epsilon
+      |> list_to_number
 
     gama * epsilon
   end
 
   defp get_gama(report) do
     report
-    |> get_most
-    |> list_to_number
+    |> transpose
+    |> Enum.map(&if ones(&1) >= zeros(&1), do: "1", else: "0")
   end
 
   defp get_epsilon(report) do
     report
-    |> get_least
-    |> list_to_number
+    |> transpose
+    |> Enum.map(&if zeros(&1) <= ones(&1), do: "0", else: "1")
   end
 
   defp list_to_number(list) do
@@ -111,11 +98,13 @@ defmodule BinaryDiagnostic do
       contents
       |> parse
       |> oxygen_generator
+      |> list_to_number
 
     co2 =
       contents
       |> parse
       |> co2_scrubber
+      |> list_to_number
 
     oxigen * co2
   end

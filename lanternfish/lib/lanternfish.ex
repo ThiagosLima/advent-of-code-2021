@@ -3,16 +3,18 @@ defmodule Lanternfish do
   Documentation for `Lanternfish`.
   """
 
-  @doc """
-  Hello world.
+  def fishes_after_days(days, initial) do
+    Enum.reduce(1..days//1, initial, fn _day, fishes -> multiply(fishes) end)
+    |> Enum.count
+  end
 
-  ## Examples
+  defp multiply(fishes) do
+    zeros = Enum.count(fishes, &(&1 === 0))
 
-      iex> Lanternfish.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    fishes
+    |> Enum.map(fn fish ->
+      if fish == 0, do: 6, else: fish - 1
+    end)
+    |> Enum.concat(Enum.take(Stream.cycle([8]), zeros))
   end
 end
